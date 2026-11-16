@@ -1,0 +1,31 @@
+name: financial_lakehouse
+version: "1.0.0"
+config-version: 2
+
+profile: financial_lakehouse
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  lakehouse_root: "{{ env_var('DBT_LAKEHOUSE_ROOT', '../data/lakehouse') }}"
+
+models:
+  financial_lakehouse:
+    staging:
+      +materialized: view
+      +schema: silver
+    intermediate:
+      +materialized: view
+      +schema: silver
+    marts:
+      +materialized: table
+      +schema: gold

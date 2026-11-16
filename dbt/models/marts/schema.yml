@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: dim_accounts
+    description: "Current customer account dimension."
+    columns:
+      - name: account_id
+        tests:
+          - unique
+          - not_null
+      - name: account_tier
+        tests:
+          - accepted_values:
+              values: ['STANDARD', 'GROWTH', 'ENTERPRISE']
+
+  - name: fct_transactions
+    description: "Deduplicated, multi-currency normalized fact table."
+    columns:
+      - name: tx_id
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_accounts')
+              field: account_id
+      - name: currency
+        tests:
+          - accepted_values:
+              values: ['USD', 'MXN', 'EUR', 'GBP', 'CAD', 'JPY']
+
+  - name: mart_daily_currency_exposure
+    description: "Daily financial exposure aggregated in original, USD, and MXN amounts."
+    columns:
+      - name: tx_date
+        tests:
+          - not_null
+      - name: currency
+        tests:
+          - not_null

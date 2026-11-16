@@ -1,0 +1,32 @@
+# Python & Testing
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Environment & Secrets
+.env
+
+# Local Lakehouse Data & DuckDB artifacts
+data/
+*.duckdb
+*.duckdb.wal
+
+# Airflow & dbt runtime artifacts
+airflow/logs/
+airflow/plugins/__pycache__/
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/.user.yml
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
